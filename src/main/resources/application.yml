@@ -1,0 +1,64 @@
+spring:
+  jackson:
+    serialization:
+      indent-output: true
+    deserialization:
+      fail-on-unknown-properties: false
+  datasource:
+    primary:
+      driver-class-name: ${PRIMARY_DATABASE_DRIVER:org.postgresql.Driver}
+      url: ${PRIMARY_DATABASE_URL:jdbc:postgresql://localhost:5432/camunda_demo_project_db}
+      username: ${PRIMARY_DATABASE_USERNAME:postgres}
+      password: ${PRIMARY_DATABASE_PASSWORD:postgres}
+      hikari:
+        maximum-pool-size: ${DATABASE_MAX_POOL_SIZE:30}
+        poolName: Hikari
+        auto-commit: false
+    camunda:
+      driver-class-name: ${CAMUNDA_DATABASE_DRIVER:org.postgresql.Driver}
+      url: ${CAMUNDA_DATABASE_URL:jdbc:postgresql://localhost:5432/camunda_db}
+      username: ${CAMUNDA_DATABASE_USERNAME:postgres}
+      password: ${CAMUNDA_DATABASE_PASSWORD:postgres}
+      hikari:
+        maximum-pool-size: ${CAMUNDA_DATABASE_MAX_POOL_SIZE:30}
+        poolName: Hikari
+        auto-commit: false
+  jmx:
+    enabled: false
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: deferred
+  jpa:
+    database-platform: ${DATABASE_DIALECT:com.epam.subo.util.domain.FixedPostgreSql95Dialect}
+    open-in-view: false
+    properties:
+      hibernate.jdbc.time_zone: UTC
+      hibernate.id.new_generator_mappings: true
+      hibernate.connection.provider_disables_autocommit: true
+      hibernate.cache.use_second_level_cache: true
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+      hibernate.jdbc.batch_size: 25
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+      hibernate.query.fail_on_pagination_over_collection_fetch: true
+      hibernate.query.in_clause_parameter_padding: true
+    hibernate:
+      show-sql: true
+      ddl-auto: create-drop
+
+application:
+  camunda:
+    task1:
+      throwEnabled: false
+    go-to-second-task: false
+
+camunda:
+  bpm:
+    admin-user:
+      id: admin
+      password: admin
+  process:
+    timer:
+      duration: PT5S
