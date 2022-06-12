@@ -52,10 +52,20 @@ application:
   camunda:
     task1:
       throwEnabled: false
-    go-to-second-task: false
+    go-to-second-task: true
 
 camunda:
   bpm:
+    client:
+      base-url: http://localhost:8080/engine-rest # the URL pointing to the Camunda Platform Runtime REST API
+#      lock-duration: 10000 # defines how many milliseconds the External Tasks are locked until they can be fetched again
+      subscriptions:
+        ExternalTask2:
+          variable-names: CAMUNDA_MESSAGE # only fetch these two variables
+          process-definition-key: camundaMain
+      basic-auth:
+        password: admin
+        username: admin
     admin-user:
       id: admin
       password: admin
